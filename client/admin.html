@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Manga Autos</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="admin-logo">
+      MANGA <span>AUTOS</span>
+      <small>Admin Dashboard</small>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-section">Overview</div>
+      <a class="admin-nav-link active" data-panel="dashboard">
+        <span class="nav-icon">📊</span> Dashboard
+      </a>
+
+      <div class="admin-nav-section" style="margin-top:1rem;">Inventory</div>
+      <a class="admin-nav-link" data-panel="vehicles">
+        <span class="nav-icon">🚗</span> Vehicles
+      </a>
+      <a class="admin-nav-link" data-panel="add-vehicle">
+        <span class="nav-icon">➕</span> Add Vehicle
+      </a>
+
+      <div class="admin-nav-section" style="margin-top:1rem;">Operations</div>
+      <a class="admin-nav-link" data-panel="bookings">
+        <span class="nav-icon">📅</span> Bookings
+      </a>
+      <a class="admin-nav-link" data-panel="testimonials">
+        <span class="nav-icon">⭐</span> Testimonials
+      </a>
+
+      <div class="admin-nav-section" style="margin-top:1rem;">Site</div>
+      <a href="/" target="_blank" class="admin-nav-link">
+        <span class="nav-icon">🌐</span> View Website
+      </a>
+      <a href="/inventory" target="_blank" class="admin-nav-link">
+        <span class="nav-icon">🔍</span> View Inventory
+      </a>
+      <a class="admin-nav-link" id="logout-btn" style="margin-top:auto;cursor:pointer;">
+        <span class="nav-icon">🚪</span> Log Out
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button class="nav-burger" id="sidebar-toggle" style="display:none;"><span></span><span></span><span></span></button>
+        <h1 class="admin-page-title" id="page-title">Dashboard</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <span style="font-size:0.78rem;color:var(--silver);" id="current-time"></span>
+        <a href="https://wa.me/2348099999915" target="_blank" class="btn btn-gold btn-sm">WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- ── DASHBOARD PANEL ── -->
+      <div class="admin-panel active" id="panel-dashboard">
+        <div class="admin-stats-grid" id="dash-stats">
+          <div class="admin-stat-card"><div class="admin-stat-val" id="stat-vehicles">—</div><div class="admin-stat-label">Total Vehicles</div></div>
+          <div class="admin-stat-card"><div class="admin-stat-val" id="stat-available">—</div><div class="admin-stat-label">Available</div></div>
+          <div class="admin-stat-card"><div class="admin-stat-val" id="stat-bookings">—</div><div class="admin-stat-label">Total Bookings</div></div>
+          <div class="admin-stat-card"><div class="admin-stat-val" id="stat-pending" style="color:var(--warning)">—</div><div class="admin-stat-label">Pending Bookings</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;flex-wrap:wrap;" id="dash-grid">
+          <div class="admin-table-wrap">
+            <div style="padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
+              <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:400;">Recent Bookings</h3>
+              <button class="btn btn-ghost btn-sm" onclick="switchPanel('bookings')">View All</button>
+            </div>
+            <table class="admin-table">
+              <thead><tr><th>Name</th><th>Phone</th><th>Status</th></tr></thead>
+              <tbody id="dash-bookings-body"></tbody>
+            </table>
+          </div>
+          <div class="admin-table-wrap">
+            <div style="padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
+              <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:400;">Recent Vehicles</h3>
+              <button class="btn btn-ghost btn-sm" onclick="switchPanel('vehicles')">View All</button>
+            </div>
+            <table class="admin-table">
+              <thead><tr><th>Vehicle</th><th>Price</th><th>Views</th></tr></thead>
+              <tbody id="dash-vehicles-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── VEHICLES PANEL ── -->
+      <div class="admin-panel" id="panel-vehicles">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+          <div>
+            <p id="vehicles-count" style="color:var(--silver);font-size:0.85rem;"></p>
+          </div>
+          <div style="display:flex;gap:0.75rem;">
+            <input type="text" id="vehicles-search" class="filter-input" placeholder="Search vehicles…" style="width:220px;">
+            <button class="btn btn-gold btn-sm" onclick="switchPanel('add-vehicle')">+ Add Vehicle</button>
+          </div>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Image</th><th>Vehicle</th><th>Year</th><th>Price</th>
+                <th>Condition</th><th>Status</th><th>Views</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="vehicles-table-body"></tbody>
+          </table>
+        </div>
+        <div id="vehicles-loading" class="loading-state"><div class="spinner"></div></div>
+      </div>
+
+      <!-- ── ADD / EDIT VEHICLE PANEL ── -->
+      <div class="admin-panel" id="panel-add-vehicle">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+          <button class="btn btn-outline btn-sm" onclick="switchPanel('vehicles')">← Back</button>
+          <h2 id="vehicle-form-title" style="font-family:var(--font-display);font-size:1.3rem;font-weight:300;">Add New Vehicle</h2>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 400px;gap:2rem;align-items:start;">
+          <div class="card" style="padding:2rem;">
+            <form id="vehicle-form">
+              <input type="hidden" id="vehicle-edit-id">
+
+              <h3 class="label" style="margin-bottom:1rem;">Basic Information</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Brand *</label>
+                  <input type="text" id="v-brand" class="form-control" placeholder="e.g. Mercedes-Benz" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Model *</label>
+                  <input type="text" id="v-model" class="form-control" placeholder="e.g. GLE 450" required>
+                </div>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Year *</label>
+                  <input type="number" id="v-year" class="form-control" placeholder="2023" min="1990" max="2030">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Price (₦) *</label>
+                  <input type="number" id="v-price" class="form-control" placeholder="95000000" required min="0">
+                </div>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Condition</label>
+                  <select id="v-condition" class="form-control">
+                    <option>Foreign Used</option>
+                    <option>Nigerian Used</option>
+                    <option>Brand New</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Location</label>
+                  <input type="text" id="v-location" class="form-control" value="Abuja">
+                </div>
+              </div>
+
+              <h3 class="label" style="margin:1.5rem 0 1rem;">Engine & Performance</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Engine</label>
+                  <input type="text" id="v-engine" class="form-control" placeholder="3.0L Inline-6 Turbo">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Horsepower</label>
+                  <input type="number" id="v-horsepower" class="form-control" placeholder="362">
+                </div>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Transmission</label>
+                  <select id="v-transmission" class="form-control">
+                    <option>Automatic</option>
+                    <option>Manual</option>
+                    <option>Single-Speed</option>
+                    <option>CVT</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Fuel Type</label>
+                  <select id="v-fuelType" class="form-control">
+                    <option>Petrol</option>
+                    <option>Diesel</option>
+                    <option>Electric</option>
+                    <option>Hybrid</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Drivetrain</label>
+                  <select id="v-drivetrain" class="form-control">
+                    <option>AWD</option>
+                    <option>4MATIC AWD</option>
+                    <option>xDrive AWD</option>
+                    <option>Full-Time 4WD</option>
+                    <option>RWD</option>
+                    <option>FWD</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Mileage (km)</label>
+                  <input type="number" id="v-mileage" class="form-control" placeholder="12000" min="0">
+                </div>
+              </div>
+
+              <h3 class="label" style="margin:1.5rem 0 1rem;">Appearance</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Exterior Color</label>
+                  <input type="text" id="v-exteriorColor" class="form-control" placeholder="Obsidian Black Metallic">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Interior Color</label>
+                  <input type="text" id="v-interiorColor" class="form-control" placeholder="Macchiato Beige">
+                </div>
+              </div>
+
+              <h3 class="label" style="margin:1.5rem 0 1rem;">Description</h3>
+              <div class="form-group">
+                <label class="form-label">Vehicle Description</label>
+                <textarea id="v-description" class="form-control" rows="4" placeholder="Describe the vehicle in detail…"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Features (comma-separated)</label>
+                <textarea id="v-features" class="form-control" rows="3" placeholder="Panoramic Sunroof, Massage Seats, Heads-Up Display, …"></textarea>
+              </div>
+
+              <div style="display:flex;gap:0.75rem;margin-top:0.5rem;">
+                <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                  <input type="checkbox" id="v-featured" style="accent-color:var(--gold)">
+                  <span class="form-label" style="margin:0;">Mark as Featured</span>
+                </label>
+                <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                  <input type="checkbox" id="v-sold" style="accent-color:var(--danger)">
+                  <span class="form-label" style="margin:0;color:var(--danger)">Mark as Sold</span>
+                </label>
+              </div>
+
+              <div style="display:flex;gap:0.75rem;margin-top:2rem;">
+                <button type="submit" class="btn btn-gold" id="vehicle-submit-btn">Save Vehicle</button>
+                <button type="button" class="btn btn-outline" onclick="resetVehicleForm()">Clear Form</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Image upload sidebar -->
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <div class="card" style="padding:1.5rem;">
+              <h3 class="label" style="margin-bottom:1rem;">Vehicle Images</h3>
+
+              <!-- URL input -->
+              <div class="form-group">
+                <label class="form-label">Add Image URL</label>
+                <div style="display:flex;gap:0.5rem;">
+                  <input type="url" id="img-url-input" class="form-control" placeholder="https://…">
+                  <button type="button" class="btn btn-ghost btn-sm" id="add-url-btn" style="white-space:nowrap">Add URL</button>
+                </div>
+              </div>
+
+              <div style="text-align:center;color:var(--silver-dim);font-size:0.75rem;margin:0.75rem 0;">— or upload files —</div>
+
+              <!-- File upload -->
+              <div class="img-upload-area" id="upload-area">
+                <input type="file" id="img-file-input" accept="image/*" multiple>
+                <div class="img-upload-icon">📸</div>
+                <div class="img-upload-text">Click or drag images here<br><small style="color:var(--silver-dim)">JPG, PNG, WebP · Max 10MB each</small></div>
+              </div>
+              <div id="upload-progress" style="display:none;margin-top:0.75rem;">
+                <div style="height:3px;background:var(--obsidian-3);border-radius:2px;overflow:hidden;">
+                  <div id="upload-bar" style="height:100%;background:var(--gold);width:0%;transition:width 0.3s;"></div>
+                </div>
+                <p id="upload-status" style="font-size:0.75rem;color:var(--silver);margin-top:0.35rem;"></p>
+              </div>
+
+              <!-- Preview -->
+              <div class="img-preview-list" id="img-preview-list"></div>
+            </div>
+
+            <!-- Quick tips -->
+            <div class="card" style="padding:1.5rem;">
+              <h3 class="label" style="margin-bottom:0.75rem;">Tips</h3>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;">
+                <li style="font-size:0.8rem;color:var(--silver);display:flex;gap:0.5rem;"><span style="color:var(--gold)">✦</span> First image = main listing photo</li>
+                <li style="font-size:0.8rem;color:var(--silver);display:flex;gap:0.5rem;"><span style="color:var(--gold)">✦</span> Use Cloudinary or Unsplash URLs for reliability</li>
+                <li style="font-size:0.8rem;color:var(--silver);display:flex;gap:0.5rem;"><span style="color:var(--gold)">✦</span> Clear exterior + interior shots convert best</li>
+                <li style="font-size:0.8rem;color:var(--silver);display:flex;gap:0.5rem;"><span style="color:var(--gold)">✦</span> Mark Featured to appear on homepage</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BOOKINGS PANEL ── -->
+      <div class="admin-panel" id="panel-bookings">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button class="btn btn-outline btn-sm booking-filter active" data-status="all">All</button>
+            <button class="btn btn-outline btn-sm booking-filter" data-status="pending">Pending</button>
+            <button class="btn btn-outline btn-sm booking-filter" data-status="confirmed">Confirmed</button>
+            <button class="btn btn-outline btn-sm booking-filter" data-status="completed">Completed</button>
+            <button class="btn btn-outline btn-sm booking-filter" data-status="cancelled">Cancelled</button>
+          </div>
+          <p id="bookings-count" style="color:var(--silver);font-size:0.85rem;"></p>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Name</th><th>Phone</th><th>Vehicle</th><th>Date</th><th>Service</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="bookings-table-body"></tbody>
+          </table>
+        </div>
+        <div id="bookings-loading" class="loading-state"><div class="spinner"></div></div>
+      </div>
+
+      <!-- ── TESTIMONIALS PANEL ── -->
+      <div class="admin-panel" id="panel-testimonials">
+        <div style="display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:start;">
+          <div>
+            <h3 class="label" style="margin-bottom:1rem;">All Testimonials</h3>
+            <div id="testimonials-admin-list" style="display:flex;flex-direction:column;gap:1rem;">
+              <div class="loading-state"><div class="spinner"></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="card" style="padding:1.5rem;position:sticky;top:calc(var(--nav-h) + 1rem);">
+              <h3 class="label" style="margin-bottom:1rem;">Add Testimonial</h3>
+              <form id="testimonial-form">
+                <div class="form-group">
+                  <label class="form-label">Client Name *</label>
+                  <input type="text" id="t-name" class="form-control" required placeholder="Alhaji Musa...">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Role / Title</label>
+                  <input type="text" id="t-role" class="form-control" placeholder="Business Executive">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Location</label>
+                  <input type="text" id="t-location" class="form-control" placeholder="Abuja">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Vehicle Purchased</label>
+                  <input type="text" id="t-vehicle" class="form-control" placeholder="Range Rover Autobiography 2022">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Rating</label>
+                  <select id="t-rating" class="form-control">
+                    <option value="5">★★★★★ (5)</option>
+                    <option value="4">★★★★☆ (4)</option>
+                    <option value="3">★★★☆☆ (3)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Testimonial Text *</label>
+                  <textarea id="t-text" class="form-control" rows="4" required placeholder="What did the client say?"></textarea>
+                </div>
+                <button type="submit" class="btn btn-gold" style="width:100%">Add Testimonial</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-content -->
+  </main>
+</div>
+
+<!-- ── CONFIRM MODAL ── -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <h2 id="confirm-title">Confirm Action</h2>
+      <button class="modal-close" onclick="closeModal('confirm-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <p id="confirm-message" style="color:var(--silver);line-height:1.7;"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('confirm-modal')">Cancel</button>
+      <button class="btn btn-danger btn-sm" id="confirm-action-btn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/core.js"></script>
+<script>
+// ── Auth guard ─────────────────────────────────────────
+
+// ── State ──────────────────────────────────────────────
+let vehicleImages = [];  // array of URL strings for current form
+let bookingFilter = 'all';
+let allBookings   = [];
+let allVehicles   = [];
+
+// ── Clock ──────────────────────────────────────────────
+function updateClock() {
+  document.getElementById('current-time').textContent = new Date().toLocaleTimeString('en-NG', { hour: '2-digit', minute: '2-digit' });
+}
+setInterval(updateClock, 1000); updateClock();
+
+// ── Panel switching ───────────────────────────────────
+const PANEL_TITLES = { dashboard: 'Dashboard', vehicles: 'Vehicles', 'add-vehicle': 'Add Vehicle', bookings: 'Bookings', testimonials: 'Testimonials' };
+
+function switchPanel(name) {
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-link[data-panel]').forEach(l => l.classList.remove('active'));
+  const panel = document.getElementById(`panel-${name}`);
+  if (panel) panel.classList.add('active');
+  const link = document.querySelector(`.admin-nav-link[data-panel="${name}"]`);
+  if (link) link.classList.add('active');
+  document.getElementById('page-title').textContent = PANEL_TITLES[name] || name;
+  closeSidebar();
+
+  if (name === 'dashboard')    loadDashboard();
+  if (name === 'vehicles')     loadVehicles();
+  if (name === 'bookings')     loadBookings();
+  if (name === 'testimonials') loadTestimonialsAdmin();
+  if (name === 'add-vehicle')  { resetVehicleForm(); }
+}
+
+document.querySelectorAll('.admin-nav-link[data-panel]').forEach(link => {
+  link.addEventListener('click', () => switchPanel(link.dataset.panel));
+});
+
+// ── Sidebar mobile ────────────────────────────────────
+const sidebarToggle = document.getElementById('sidebar-toggle');
+if (window.innerWidth < 768) sidebarToggle.style.display = 'flex';
+window.addEventListener('resize', () => {
+  sidebarToggle.style.display = window.innerWidth < 768 ? 'flex' : 'none';
+});
+sidebarToggle.addEventListener('click', () => document.getElementById('admin-sidebar').classList.toggle('open'));
+function closeSidebar() { document.getElementById('admin-sidebar').classList.remove('open'); }
+
+// ── Logout ─────────────────────────────────────────────
+document.getElementById('logout-btn').addEventListener('click', () => {
+  sessionStorage.removeItem('admin_token');
+  window.location.href = '/admin/login';
+});
+
+// ── Modal helpers ──────────────────────────────────────
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function confirmAction(title, message, onConfirm) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-message').textContent = message;
+  const btn = document.getElementById('confirm-action-btn');
+  btn.onclick = () => { closeModal('confirm-modal'); onConfirm(); };
+  openModal('confirm-modal');
+}
+
+// ── Dash grid responsive ──────────────────────────────
+(function() {
+  const grid = document.getElementById('dash-grid');
+  if (!grid) return;
+  function check() { grid.style.gridTemplateColumns = window.innerWidth < 900 ? '1fr' : '1fr 1fr'; }
+  window.addEventListener('resize', check); check();
+})();
+
+// ── DASHBOARD ─────────────────────────────────────────
+async function loadDashboard() {
+  try {
+    const [stats, vehicles, bookings] = await Promise.all([
+      apiFetch('/api/stats'),
+      apiFetch('/api/vehicles?limit=5'),
+      apiFetch('/api/bookings'),
+    ]);
+    document.getElementById('stat-vehicles').textContent  = stats.totalVehicles;
+    document.getElementById('stat-available').textContent = stats.carsAvailable;
+    document.getElementById('stat-bookings').textContent  = stats.totalBookings;
+    document.getElementById('stat-pending').textContent   = stats.pendingBookings;
+
+    const bBody = document.getElementById('dash-bookings-body');
+    bBody.innerHTML = '';
+    if (!bookings.length) {
+      bBody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--silver-dim);padding:2rem">No bookings yet</td></tr>';
+    } else {
+      bookings.slice(0, 6).forEach(b => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${b.name}</td><td>${b.phone || '—'}</td><td><span class="status-badge status-${b.status}">${b.status}</span></td>`;
+        bBody.appendChild(tr);
+      });
+    }
+
+    const vBody = document.getElementById('dash-vehicles-body');
+    vBody.innerHTML = '';
+    vehicles.vehicles.slice(0, 6).forEach(v => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${v.name}</td><td style="color:var(--gold)">${formatPrice(v.price)}</td><td>${v.views || 0}</td>`;
+      vBody.appendChild(tr);
+    });
+  } catch (e) { showToast('Could not load dashboard: ' + e.message, 'error'); }
+}
+
+// ── VEHICLES ──────────────────────────────────────────
+async function loadVehicles(search = '') {
+  const body = document.getElementById('vehicles-table-body');
+  const loading = document.getElementById('vehicles-loading');
+  const countEl = document.getElementById('vehicles-count');
+  body.innerHTML = ''; loading.style.display = 'flex';
+
+  try {
+    const q = search ? `?search=${encodeURIComponent(search)}&limit=50` : '?limit=50';
+    const data = await apiFetch('/api/vehicles' + q);
+    allVehicles = data.vehicles;
+    loading.style.display = 'none';
+    countEl.textContent = `${data.total} vehicle${data.total !== 1 ? 's' : ''} total`;
+
+    if (!data.vehicles.length) {
+      body.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:3rem;color:var(--silver-dim)">No vehicles found</td></tr>`;
+      return;
+    }
+    data.vehicles.forEach(v => {
+      const img = (v.images && v.images[0]) || '';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${img ? `<img src="${img}" alt="${v.name}" onerror="this.style.display='none'">` : '<div style="width:60px;height:44px;background:var(--obsidian-3);border-radius:4px;"></div>'}</td>
+        <td><strong>${v.brand}</strong><br><span style="font-size:0.8rem;color:var(--silver)">${v.model}</span></td>
+        <td>${v.year}</td>
+        <td style="color:var(--gold)">${formatPrice(v.price)}</td>
+        <td>${v.condition || '—'}</td>
+        <td>
+          ${v.sold ? '<span class="status-badge status-cancelled">Sold</span>' : '<span class="status-badge status-confirmed">Available</span>'}
+          ${v.featured ? '<span class="status-badge status-pending" style="margin-left:0.25rem;">Featured</span>' : ''}
+        </td>
+        <td>${v.views || 0}</td>
+        <td>
+          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+            <button class="btn btn-ghost btn-sm" onclick="editVehicle('${v.id}')">Edit</button>
+            <button class="btn btn-outline btn-sm" onclick="toggleSold('${v.id}', ${v.sold})">${v.sold ? 'Unmark Sold' : 'Mark Sold'}</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteVehicle('${v.id}', '${v.name.replace(/'/g,'')}')">Delete</button>
+          </div>
+        </td>`;
+      body.appendChild(tr);
+    });
+  } catch (e) {
+    loading.style.display = 'none';
+    body.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--danger)">${e.message}</td></tr>`;
+  }
+}
+
+// Search debounce
+let vSearchTimer;
+document.getElementById('vehicles-search').addEventListener('input', e => {
+  clearTimeout(vSearchTimer);
+  vSearchTimer = setTimeout(() => loadVehicles(e.target.value), 350);
+});
+
+async function toggleSold(id, currentlySold) {
+  const v = allVehicles.find(v => v.id === id);
+  if (!v) return;
+  try {
+    await apiFetch(`/api/vehicles/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ ...v, sold: !currentlySold }),
+    });
+    showToast(`Marked as ${currentlySold ? 'available' : 'sold'}`, 'success');
+    loadVehicles();
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+function deleteVehicle(id, name) {
+  confirmAction('Delete Vehicle', `Delete "${name}"? This cannot be undone.`, async () => {
+    try {
+      await apiFetch(`/api/vehicles/${id}`, { method: 'DELETE' });
+      showToast('Vehicle deleted', 'success');
+      loadVehicles();
+    } catch (e) { showToast(e.message, 'error'); }
+  });
+}
+
+function editVehicle(id) {
+  const v = allVehicles.find(v => v.id === id);
+  if (!v) return;
+  switchPanel('add-vehicle');
+  setTimeout(() => {
+    document.getElementById('vehicle-form-title').textContent = 'Edit Vehicle';
+    document.getElementById('vehicle-edit-id').value = id;
+    document.getElementById('v-brand').value          = v.brand || '';
+    document.getElementById('v-model').value          = v.model || '';
+    document.getElementById('v-year').value           = v.year || '';
+    document.getElementById('v-price').value          = v.price || '';
+    document.getElementById('v-condition').value      = v.condition || 'Foreign Used';
+    document.getElementById('v-location').value       = v.location || 'Abuja';
+    document.getElementById('v-engine').value         = v.engine || '';
+    document.getElementById('v-horsepower').value     = v.horsepower || '';
+    document.getElementById('v-transmission').value   = v.transmission || 'Automatic';
+    document.getElementById('v-fuelType').value       = v.fuelType || 'Petrol';
+    document.getElementById('v-drivetrain').value     = v.drivetrain || 'AWD';
+    document.getElementById('v-mileage').value        = v.mileage || '';
+    document.getElementById('v-exteriorColor').value  = v.exteriorColor || '';
+    document.getElementById('v-interiorColor').value  = v.interiorColor || '';
+    document.getElementById('v-description').value    = v.description || '';
+    document.getElementById('v-features').value       = (v.features || []).join(', ');
+    document.getElementById('v-featured').checked     = !!v.featured;
+    document.getElementById('v-sold').checked         = !!v.sold;
+    vehicleImages = [...(v.images || [])];
+    renderImagePreviews();
+  }, 50);
+}
+
+function resetVehicleForm() {
+  document.getElementById('vehicle-form').reset();
+  document.getElementById('vehicle-edit-id').value = '';
+  document.getElementById('vehicle-form-title').textContent = 'Add New Vehicle';
+  vehicleImages = [];
+  renderImagePreviews();
+}
+
+// ── Vehicle form submit ────────────────────────────────
+document.getElementById('vehicle-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('vehicle-submit-btn');
+  const editId = document.getElementById('vehicle-edit-id').value;
+  const features = document.getElementById('v-features').value
+    .split(',').map(f => f.trim()).filter(Boolean);
+
+  const payload = {
+    brand:         document.getElementById('v-brand').value.trim(),
+    model:         document.getElementById('v-model').value.trim(),
+    year:          document.getElementById('v-year').value,
+    price:         document.getElementById('v-price').value,
+    condition:     document.getElementById('v-condition').value,
+    location:      document.getElementById('v-location').value.trim(),
+    engine:        document.getElementById('v-engine').value.trim(),
+    horsepower:    document.getElementById('v-horsepower').value || undefined,
+    transmission:  document.getElementById('v-transmission').value,
+    fuelType:      document.getElementById('v-fuelType').value,
+    drivetrain:    document.getElementById('v-drivetrain').value,
+    mileage:       document.getElementById('v-mileage').value || undefined,
+    exteriorColor: document.getElementById('v-exteriorColor').value.trim(),
+    interiorColor: document.getElementById('v-interiorColor').value.trim(),
+    description:   document.getElementById('v-description').value.trim(),
+    features,
+    featured:      document.getElementById('v-featured').checked,
+    sold:          document.getElementById('v-sold').checked,
+    images:        vehicleImages,
+  };
+
+  btn.textContent = 'Saving…'; btn.disabled = true;
+  try {
+    if (editId) {
+      await apiFetch(`/api/vehicles/${editId}`, { method: 'PUT', body: JSON.stringify(payload) });
+      showToast('Vehicle updated', 'success');
+    } else {
+      await apiFetch('/api/vehicles', { method: 'POST', body: JSON.stringify(payload) });
+      showToast('Vehicle added to inventory', 'success');
+      resetVehicleForm();
+    }
+    switchPanel('vehicles');
+  } catch (e) {
+    showToast(e.message || 'Save failed', 'error');
+  } finally {
+    btn.textContent = 'Save Vehicle'; btn.disabled = false;
+  }
+});
+
+// ── Image management ───────────────────────────────────
+function renderImagePreviews() {
+  const list = document.getElementById('img-preview-list');
+  list.innerHTML = '';
+  vehicleImages.forEach((url, i) => {
+    const item = document.createElement('div');
+    item.className = 'img-preview-item';
+    item.innerHTML = `
+      <img src="${url}" onerror="this.parentElement.remove()">
+      <button type="button" class="img-preview-remove" onclick="removeImage(${i})">×</button>
+      ${i === 0 ? '<div style="font-size:0.6rem;text-align:center;color:var(--gold);margin-top:2px;">MAIN</div>' : ''}`;
+    list.appendChild(item);
+  });
+}
+
+function removeImage(idx) {
+  vehicleImages.splice(idx, 1);
+  renderImagePreviews();
+}
+
+// Add URL
+document.getElementById('add-url-btn').addEventListener('click', () => {
+  const url = document.getElementById('img-url-input').value.trim();
+  if (!url) return;
+  vehicleImages.push(url);
+  document.getElementById('img-url-input').value = '';
+  renderImagePreviews();
+  showToast('Image URL added', 'success');
+});
+document.getElementById('img-url-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('add-url-btn').click(); }
+});
+
+// File upload
+document.getElementById('img-file-input').addEventListener('change', async (e) => {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+
+  const progress = document.getElementById('upload-progress');
+  const bar = document.getElementById('upload-bar');
+  const status = document.getElementById('upload-status');
+  progress.style.display = 'block';
+  status.textContent = `Uploading ${files.length} file(s)…`;
+  bar.style.width = '30%';
+
+  const formData = new FormData();
+  files.forEach(f => formData.append('images', f));
+
+  try {
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${TOKEN}` },
+      body: formData,
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Upload failed');
+    bar.style.width = '100%';
+    status.textContent = `✓ ${data.urls.length} image(s) uploaded`;
+    data.urls.forEach(url => vehicleImages.push(url));
+    renderImagePreviews();
+    setTimeout(() => { progress.style.display = 'none'; bar.style.width = '0%'; }, 2500);
+  } catch (err) {
+    status.textContent = '✕ ' + err.message;
+    bar.style.background = 'var(--danger)';
+    setTimeout(() => { progress.style.display = 'none'; bar.style.width = '0%'; bar.style.background = 'var(--gold)'; }, 3000);
+  }
+  e.target.value = '';
+});
+
+// ── BOOKINGS ──────────────────────────────────────────
+async function loadBookings() {
+  const body = document.getElementById('bookings-table-body');
+  const loading = document.getElementById('bookings-loading');
+  const countEl = document.getElementById('bookings-count');
+  body.innerHTML = ''; loading.style.display = 'flex';
+
+  try {
+    allBookings = await apiFetch('/api/bookings');
+    loading.style.display = 'none';
+    renderBookings();
+  } catch (e) {
+    loading.style.display = 'none';
+    body.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--danger)">${e.message}</td></tr>`;
+  }
+}
+
+function renderBookings() {
+  const body = document.getElementById('bookings-table-body');
+  const countEl = document.getElementById('bookings-count');
+  const filtered = bookingFilter === 'all' ? allBookings : allBookings.filter(b => b.status === bookingFilter);
+  countEl.textContent = `${filtered.length} booking${filtered.length !== 1 ? 's' : ''}`;
+  body.innerHTML = '';
+
+  if (!filtered.length) {
+    body.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:3rem;color:var(--silver-dim)">No bookings found</td></tr>`;
+    return;
+  }
+
+  filtered.slice().reverse().forEach(b => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${b.name}</td>
+      <td><a href="tel:${b.phone}" style="color:var(--gold)">${b.phone}</a></td>
+      <td>${b.vehicle || '—'}</td>
+      <td>${b.date || '—'}</td>
+      <td>${b.subject || 'Inspection'}</td>
+      <td><span class="status-badge status-${b.status}">${b.status}</span></td>
+      <td>
+        <div style="display:flex;gap:0.35rem;flex-wrap:wrap;">
+          <select class="filter-select" style="padding:0.3rem 0.5rem;font-size:0.72rem;" onchange="updateBookingStatus('${b.id}', this.value)">
+            <option ${b.status==='pending'?'selected':''}>pending</option>
+            <option ${b.status==='confirmed'?'selected':''}>confirmed</option>
+            <option ${b.status==='completed'?'selected':''}>completed</option>
+            <option ${b.status==='cancelled'?'selected':''}>cancelled</option>
+          </select>
+          <a href="https://wa.me/${(b.phone||'').replace(/[^0-9]/g,'')}?text=Hello%20${encodeURIComponent(b.name)}%2C%20your%20appointment%20at%20Manga%20Autos%20is%20confirmed." target="_blank" class="btn btn-ghost btn-sm" title="WhatsApp client">💬</a>
+          <button class="btn btn-danger btn-sm" onclick="deleteBooking('${b.id}')">✕</button>
+        </div>
+      </td>`;
+    body.appendChild(tr);
+  });
+}
+
+async function updateBookingStatus(id, status) {
+  try {
+    await apiFetch(`/api/bookings/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) });
+    const b = allBookings.find(b => b.id === id);
+    if (b) b.status = status;
+    renderBookings();
+    showToast(`Booking marked as ${status}`, 'success');
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+function deleteBooking(id) {
+  confirmAction('Delete Booking', 'Delete this booking? This cannot be undone.', async () => {
+    try {
+      await apiFetch(`/api/bookings/${id}`, { method: 'DELETE' });
+      allBookings = allBookings.filter(b => b.id !== id);
+      renderBookings();
+      showToast('Booking deleted', 'success');
+    } catch (e) { showToast(e.message, 'error'); }
+  });
+}
+
+document.querySelectorAll('.booking-filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.booking-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    bookingFilter = btn.dataset.status;
+    renderBookings();
+  });
+});
+
+// ── TESTIMONIALS ADMIN ────────────────────────────────
+async function loadTestimonialsAdmin() {
+  const list = document.getElementById('testimonials-admin-list');
+  list.innerHTML = '<div class="loading-state"><div class="spinner"></div></div>';
+  try {
+    const testimonials = await apiFetch('/api/testimonials');
+    list.innerHTML = '';
+    if (!testimonials.length) {
+      list.innerHTML = '<p style="color:var(--silver-dim)">No testimonials yet.</p>';
+      return;
+    }
+    testimonials.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.padding = '1.25rem';
+      card.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
+          <div>
+            <div style="font-weight:600;color:var(--platinum);">${t.name}</div>
+            <div style="font-size:0.78rem;color:var(--silver);">${t.role || ''} · ${t.location || ''}</div>
+            ${t.vehicle ? `<div style="font-size:0.72rem;color:var(--gold-dim);margin-top:0.15rem;">${t.vehicle}</div>` : ''}
+            <div style="color:var(--gold);font-size:0.85rem;margin-top:0.5rem;">${'★'.repeat(t.rating || 5)}</div>
+            <p style="font-size:0.875rem;color:var(--silver);margin-top:0.5rem;line-height:1.6;">"${t.text}"</p>
+          </div>
+          <button class="btn btn-danger btn-sm" style="flex-shrink:0;" onclick="deleteTestimonial('${t.id}', this)">Delete</button>
+        </div>`;
+      list.appendChild(card);
+    });
+  } catch (e) {
+    list.innerHTML = `<p style="color:var(--danger)">${e.message}</p>`;
+  }
+}
+
+async function deleteTestimonial(id, btn) {
+  confirmAction('Delete Testimonial', 'Remove this testimonial? This cannot be undone.', async () => {
+    try {
+      await apiFetch(`/api/testimonials/${id}`, { method: 'DELETE' });
+      showToast('Testimonial deleted', 'success');
+      loadTestimonialsAdmin();
+    } catch (e) { showToast(e.message, 'error'); }
+  });
+}
+
+document.getElementById('testimonial-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = e.target.querySelector('[type="submit"]');
+  const payload = {
+    name:     document.getElementById('t-name').value.trim(),
+    role:     document.getElementById('t-role').value.trim(),
+    location: document.getElementById('t-location').value.trim(),
+    vehicle:  document.getElementById('t-vehicle').value.trim(),
+    rating:   document.getElementById('t-rating').value,
+    text:     document.getElementById('t-text').value.trim(),
+  };
+  btn.textContent = 'Adding…'; btn.disabled = true;
+  try {
+    await apiFetch('/api/testimonials', { method: 'POST', body: JSON.stringify(payload) });
+    showToast('Testimonial added', 'success');
+    e.target.reset();
+    loadTestimonialsAdmin();
+  } catch (err) { showToast(err.message, 'error'); }
+  finally { btn.textContent = 'Add Testimonial'; btn.disabled = false; }
+});
+
+// ── Init ───────────────────────────────────────────────
+loadDashboard();
+</script>
+</body>
+</html>

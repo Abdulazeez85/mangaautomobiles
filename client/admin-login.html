@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Manga Autos</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .login-wrap {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.06) 0%, transparent 60%), var(--obsidian);
+      padding: 1.5rem;
+    }
+    .login-card {
+      background: var(--obsidian-2);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      width: 100%; max-width: 420px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+    .login-logo {
+      font-family: var(--font-label);
+      font-size: 1.1rem; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--white); margin-bottom: 0.35rem;
+    }
+    .login-logo span { color: var(--gold); }
+  </style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">MANGA <span>AUTOS</span></div>
+    <div class="eyebrow" style="margin-bottom:2rem;">Admin Portal</div>
+
+    <div class="form-group">
+      <label class="form-label">Admin Token</label>
+      <input type="password" id="token-input" class="form-control" placeholder="Enter your admin token">
+      <div class="form-error" id="login-error" style="display:none;color:var(--danger);font-size:0.8rem;margin-top:0.4rem;">Invalid token. Please try again.</div>
+    </div>
+    <button onclick="doLogin()" class="btn btn-gold" style="width:100%;margin-top:0.5rem;" id="login-btn">
+      Access Dashboard
+    </button>
+
+    <p style="margin-top:2rem;font-size:0.78rem;color:var(--silver-dim);text-align:center;">
+      Restricted area. Unauthorized access is prohibited.
+    </p>
+    <div style="text-align:center;margin-top:1.5rem;">
+      <a href="/" style="font-size:0.78rem;color:var(--silver-dim);">← Back to Website</a>
+    </div>
+  </div>
+</div>
+
+<script>
+async function doLogin() {
+  var token = document.getElementById('token-input').value.trim();
+  var btn = document.getElementById('login-btn');
+  var err = document.getElementById('login-error');
+  if (!token) return;
+  err.style.display = 'none';
+  btn.textContent = 'Verifying…';
+  btn.disabled = true;
+  try {
+    var res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token })
+    });
+    var data = await res.json();
+    if (data.success) {
+      window.location.href = '/admin';
+    } else {
+      err.style.display = 'block';
+      btn.textContent = 'Access Dashboard';
+      btn.disabled = false;
+    }
+  } catch(ex) {
+    err.textContent = 'Error: ' + ex.message;
+    err.style.display = 'block';
+    btn.textContent = 'Access Dashboard';
+    btn.disabled = false;
+  }
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+</script>
+</body>
+</html>

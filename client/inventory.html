@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory — Manga Autos | Luxury Cars For Sale In Abuja</title>
+  <meta name="description" content="Browse Manga Autos' premium inventory. Luxury cars for sale in Abuja — Mercedes-Benz, BMW, Tesla, Range Rover and more.">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">MANGA <span>AUTOS</span></a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/inventory">Inventory</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <a href="https://wa.me/2348099999915" target="_blank" class="nav-cta">WhatsApp Us</a>
+    <button class="nav-burger" id="nav-burger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="/">Home</a><a href="/inventory">Inventory</a><a href="/about">About</a><a href="/contact">Contact</a>
+  <a href="https://wa.me/2348099999915" target="_blank" style="color:var(--gold)">WhatsApp Us</a>
+</div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="/">Home</a><span>/</span><span>Inventory</span></div>
+    <span class="eyebrow">Premium Collection</span>
+    <div class="gold-line"></div>
+    <h1 class="display-lg">Our <em>Inventory</em></h1>
+    <p style="color:var(--silver);margin-top:0.75rem;">Every vehicle verified, inspected, and ready for delivery.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <!-- Filters -->
+    <div class="filters-bar">
+      <div class="filter-group" style="flex:2;min-width:200px;">
+        <label class="filter-label">Search</label>
+        <input type="text" id="filter-search" class="filter-input" placeholder="Brand, model, keyword…">
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Brand</label>
+        <select id="filter-brand" class="filter-select">
+          <option value="">All Brands</option>
+          <option>Mercedes-Benz</option>
+          <option>BMW</option>
+          <option>Tesla</option>
+          <option>Range Rover</option>
+          <option>Porsche</option>
+          <option>Lexus</option>
+          <option>Bentley</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Condition</label>
+        <select id="filter-condition" class="filter-select">
+          <option value="">All</option>
+          <option>Foreign Used</option>
+          <option>Nigerian Used</option>
+          <option>Brand New</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Fuel Type</label>
+        <select id="filter-fuel" class="filter-select">
+          <option value="">All</option>
+          <option>Petrol</option>
+          <option>Diesel</option>
+          <option>Electric</option>
+          <option>Hybrid</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Sort By</label>
+        <select id="filter-sort" class="filter-select">
+          <option value="">Latest First</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+          <option value="year_desc">Newest Year</option>
+          <option value="views">Most Viewed</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:0.5rem;align-items:flex-end;">
+        <button class="btn btn-gold btn-sm" id="filter-apply">Apply</button>
+        <button class="btn btn-outline btn-sm" id="filter-reset">Reset</button>
+      </div>
+    </div>
+
+    <!-- Results header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.5rem;">
+      <p id="results-count" style="color:var(--silver);font-size:0.875rem;"></p>
+      <a href="https://wa.me/2348099999915?text=I%27m%20looking%20for%20a%20specific%20vehicle%20not%20in%20your%20inventory." target="_blank" style="font-size:0.8rem;color:var(--gold);">Can't find it? Request a vehicle →</a>
+    </div>
+
+    <!-- Grid -->
+    <div class="vehicle-grid" id="inventory-grid">
+      <div class="loading-state" style="grid-column:1/-1"><div class="spinner"></div><span>Loading vehicles…</span></div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2025 Manga Autos. All rights reserved.</p>
+      <a href="/" style="color:var(--gold-dim);font-size:0.78rem;">← Back to Home</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/core.js"></script>
+<script>
+let currentPage = 1;
+let totalPages  = 1;
+let debounceTimer;
+
+function buildQuery() {
+  const p = new URLSearchParams();
+  const search    = document.getElementById('filter-search').value.trim();
+  const brand     = document.getElementById('filter-brand').value;
+  const condition = document.getElementById('filter-condition').value;
+  const fuel      = document.getElementById('filter-fuel').value;
+  const sort      = document.getElementById('filter-sort').value;
+  if (search)    p.set('search', search);
+  if (brand)     p.set('brand', brand);
+  if (condition) p.set('condition', condition);
+  if (fuel)      p.set('fuelType', fuel);
+  if (sort)      p.set('sort', sort);
+  p.set('page', currentPage);
+  p.set('limit', 12);
+  return p.toString();
+}
+
+async function loadInventory() {
+  const grid = document.getElementById('inventory-grid');
+  const countEl = document.getElementById('results-count');
+  grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1"><div class="spinner"></div><span>Loading…</span></div>';
+
+  try {
+    const data = await apiFetch('/api/vehicles?' + buildQuery());
+    totalPages = data.totalPages;
+    currentPage = data.currentPage;
+
+    countEl.textContent = `${data.total} vehicle${data.total !== 1 ? 's' : ''} found`;
+    grid.innerHTML = '';
+
+    if (!data.vehicles.length) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-state-icon">🔍</div>
+        <h3>No vehicles match your filters</h3>
+        <p style="margin-top:0.5rem;font-size:0.875rem;">Try adjusting your search or <a href="https://wa.me/2348099999915" target="_blank" style="color:var(--gold)">request a specific vehicle</a>.</p>
+      </div>`;
+    } else {
+      data.vehicles.forEach(v => grid.appendChild(buildVehicleCard(v)));
+    }
+    renderPagination();
+  } catch (e) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><h3>Could not load vehicles</h3><p>${e.message}</p></div>`;
+  }
+}
+
+function renderPagination() {
+  const el = document.getElementById('pagination');
+  el.innerHTML = '';
+  if (totalPages <= 1) return;
+
+  const prev = document.createElement('button');
+  prev.className = 'page-btn'; prev.textContent = '←';
+  prev.disabled = currentPage === 1;
+  prev.addEventListener('click', () => { currentPage--; loadInventory(); window.scrollTo(0,0); });
+  el.appendChild(prev);
+
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+    btn.textContent = i;
+    btn.addEventListener('click', () => { currentPage = i; loadInventory(); window.scrollTo(0,0); });
+    el.appendChild(btn);
+  }
+
+  const next = document.createElement('button');
+  next.className = 'page-btn'; next.textContent = '→';
+  next.disabled = currentPage === totalPages;
+  next.addEventListener('click', () => { currentPage++; loadInventory(); window.scrollTo(0,0); });
+  el.appendChild(next);
+}
+
+document.getElementById('filter-apply').addEventListener('click', () => { currentPage = 1; loadInventory(); });
+document.getElementById('filter-reset').addEventListener('click', () => {
+  document.getElementById('filter-search').value = '';
+  document.getElementById('filter-brand').value = '';
+  document.getElementById('filter-condition').value = '';
+  document.getElementById('filter-fuel').value = '';
+  document.getElementById('filter-sort').value = '';
+  currentPage = 1; loadInventory();
+});
+document.getElementById('filter-search').addEventListener('input', () => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => { currentPage = 1; loadInventory(); }, 400);
+});
+
+loadInventory();
+</script>
+</body>
+</html>
