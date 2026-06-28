@@ -41,6 +41,7 @@ const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client')));
+const UPLOADS_DIR = path.join(__dirname, 'uploads');
 app.use('/uploads', express.static(UPLOADS_DIR));
 
 // ── Auth helpers ───────────────────────────────────────────────────────────────

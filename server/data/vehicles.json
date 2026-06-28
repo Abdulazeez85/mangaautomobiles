@@ -287,28 +287,5 @@
     "sold": false,
     "views": 567,
     "createdAt": "2024-09-05T10:00:00Z"
-  },
-  {
-    "id": "v1782642100771",
-    "name": "Toyota corolla",
-    "brand": "Toyota",
-    "model": "corolla",
-    "year": 2022,
-    "price": 5666666666,
-    "condition": "Foreign Used",
-    "location": "Abuja",
-    "engine": "",
-    "transmission": "Automatic",
-    "fuelType": "Petrol",
-    "drivetrain": "AWD",
-    "exteriorColor": "",
-    "interiorColor": "",
-    "description": "",
-    "features": [],
-    "featured": false,
-    "sold": false,
-    "images": [],
-    "views": 0,
-    "createdAt": "2026-06-28T10:21:40.772Z"
   }
 ]
