@@ -95,5 +95,97 @@
     ],
     "views": 0,
     "createdAt": "2026-06-29T20:07:05.080Z"
+  },
+  {
+    "id": "v1782764472605",
+    "name": "Mercedes-Benz S500",
+    "brand": "Mercedes-Benz",
+    "model": "S500",
+    "year": 2024,
+    "price": 199999999,
+    "condition": "Foreign Used",
+    "location": "Abuja",
+    "engine": "3.0L Turbocharged Inline-6 with 48V Mild Hybrid (EQ Boost)",
+    "horsepower": "442",
+    "transmission": "Automatic",
+    "fuelType": "Hybrid",
+    "drivetrain": "AWD",
+    "mileage": "27000",
+    "exteriorColor": "White Metallic",
+    "interiorColor": "Black Metallic",
+    "description": "The 2024 Mercedes-Benz S500 4MATIC is a world-class luxury sedan powered by a 442-hp turbocharged inline-six mild-hybrid engine. It features AIRMATIC air suspension, all-wheel drive, a luxurious leather-trimmed interior with MBUX, advanced driver assistance systems, and an exceptionally smooth ride, making it one of the benchmark executive sedans in its class.",
+    "features": [
+      "| Specification    | Details                     |\n| ---------------- | --------------------------- |\n| Vehicle Type     | Full-size Luxury Sedan      |\n| Seating Capacity | 5                           |\n| Drivetrain       | 4MATIC All-Wheel Drive      |\n| Transmission     | 9-speed 9G-TRONIC Automatic |\n| Platform         | Mercedes-Benz W223          |"
+    ],
+    "featured": true,
+    "sold": false,
+    "images": [
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782735667/s500_typi8d.jpg",
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782735667/s5000_uisox5.jpg",
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782735667/s50000_xtcd1c.jpg"
+    ],
+    "views": 0,
+    "createdAt": "2026-06-29T20:21:12.607Z"
+  },
+  {
+    "id": "v1782764818055",
+    "name": "DongFeng AEOLUX",
+    "brand": "DongFeng",
+    "model": "AEOLUX",
+    "year": 2026,
+    "price": 57500000,
+    "condition": "Brand New",
+    "location": "Abuja",
+    "engine": "",
+    "horsepower": "218",
+    "transmission": "Automatic",
+    "fuelType": "Electric",
+    "drivetrain": "FWD",
+    "mileage": "0",
+    "exteriorColor": "Luxurious Black",
+    "interiorColor": "Black",
+    "description": "The 2026 Aeolus L7 EV is a practical electric SUV offering 218 hp, 310 Nm of torque, a 62.3 kWh LFP battery, and up to 518 km CLTC driving range. It combines modern styling, a technology-focused interior, comprehensive safety features, and competitive pricing, making it an attractive option in the growing electric SUV market.",
+    "features": [
+      "| Specification    | Details                       |\n| ---------------- | ----------------------------- |\n| Vehicle Type     | Compact/Mid-size Electric SUV |\n| Body Style       | 5-door SUV                    |\n| Seating Capacity | 5                             |\n| Drivetrain       | Front-Wheel Drive (FWD)       |\n| Transmission     | Single-speed automatic        |"
+    ],
+    "featured": true,
+    "sold": false,
+    "images": [
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782736030/AELOUX_hr6diw.jpg",
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782736030/AELOUX_2_iliic5.jpg"
+    ],
+    "views": 0,
+    "createdAt": "2026-06-29T20:26:58.056Z"
+  },
+  {
+    "id": "v1782765221037",
+    "name": "Mercedes-Benz GLE63S",
+    "brand": "Mercedes-Benz",
+    "model": "GLE63S",
+    "year": 2026,
+    "price": 249000000,
+    "condition": "Foreign Used",
+    "location": "Abuja",
+    "engine": "4.0L Twin-Turbocharged V8 with 48V Mild Hybrid",
+    "horsepower": "603",
+    "transmission": "Automatic",
+    "fuelType": "Petrol",
+    "drivetrain": "AWD",
+    "mileage": "11000",
+    "exteriorColor": "Obsidian Black Metallic",
+    "interiorColor": "Black Metallic",
+    "description": "The 2026 Mercedes-AMG GLE 63 S 4MATIC+ is a high-performance luxury SUV that delivers supercar-level acceleration with everyday practicality. Its 603-hp twin-turbo V8, AMG-tuned chassis, premium interior, and advanced driver assistance systems make it one of the fastest and most luxurious SUVs in its class.",
+    "features": [
+      "| Specification    | Details                                           |\n| ---------------- | ------------------------------------------------- |\n| Vehicle Type     | High-Performance Luxury SUV                       |\n| Seating Capacity | 5 (optional 7-seat configuration in some markets) |\n| Drivetrain       | AMG Performance 4MATIC+ All-Wheel Drive           |\n| Transmission     | AMG SPEEDSHIFT TCT 9-Speed Automatic              |\n| Platform         | Mercedes-Benz GLE (W167 Facelift)                 |"
+    ],
+    "featured": true,
+    "sold": false,
+    "images": [
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782736199/GLE6355_dw2uoa.jpg",
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782736199/GLE633_koxjvk.jpg",
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782736200/GLE63_g8tetv.jpg"
+    ],
+    "views": 0,
+    "createdAt": "2026-06-29T20:33:41.038Z"
   }
 ]

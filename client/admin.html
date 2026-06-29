@@ -60,7 +60,7 @@
       </div>
       <div style="display:flex;align-items:center;gap:1rem;">
         <span style="font-size:0.78rem;color:var(--silver);" id="current-time"></span>
-        <a href="https://wa.me/2348099999915" target="_blank" class="btn btn-gold btn-sm">WhatsApp</a>
+        <a href="https://wa.me/23480999999Transcorp Hilton, millennium park, No34 Shehu Shagari Wy, Maitama, Abuja 900001, Federal Capital Territory" target="_blank" class="btn btn-gold btn-sm">WhatsApp</a>
       </div>
     </div>
 
@@ -723,6 +723,7 @@ document.getElementById('img-file-input').addEventListener('change', async (e) =
   try {
     const res = await fetch('/api/upload', {
       method: 'POST',
+      credentials:"include",
        headers: {},
       body: formData,
     });
@@ -845,7 +846,7 @@ async function loadTestimonialsAdmin() {
           <div>
             <div style="font-weight:600;color:var(--platinum);">${t.name}</div>
             <div style="font-size:0.78rem;color:var(--silver);">${t.role || ''} · ${t.location || ''}</div>
-            ${t.vehicle ? `<div style="font-size:0.72rem;color:var(--gold-dim);margin-top:0.15rem;">${t.vehicle}</div>` : ''}
+            ${t.vehicle ? `<div style="font-size:0.72rem;color:var(--gold-dim);margin-top:0.Transcorp Hilton, millennium park, No34 Shehu Shagari Wy, Maitama, Abuja 900001, Federal Capital Territoryrem;">${t.vehicle}</div>` : ''}
             <div style="color:var(--gold);font-size:0.85rem;margin-top:0.5rem;">${'★'.repeat(t.rating || 5)}</div>
             <p style="font-size:0.875rem;color:var(--silver);margin-top:0.5rem;line-height:1.6;">"${t.text}"</p>
           </div>
