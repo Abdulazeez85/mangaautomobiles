@@ -27,8 +27,73 @@
     ],
     "featured": true,
     "sold": false,
-    "images": [],
+    "images": [
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782734036/bmw_i5_fa64io.jpg",
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782734035/bmw_i55_ptdobi.jpg"
+    ],
     "views": 0,
-    "createdAt": "2026-06-29T03:00:20.920Z"
+    "createdAt": "2026-06-29T03:00:20.920Z",
+    "updatedAt": "2026-06-29T19:53:25.081Z"
+  },
+  {
+    "id": "v1782763224319",
+    "name": "Xiaomi Xiaomi YU7 B4",
+    "brand": "Xiaomi",
+    "model": "Xiaomi YU7 B4",
+    "year": 2026,
+    "price": 95000000,
+    "condition": "Brand New",
+    "location": "Abuja",
+    "engine": "",
+    "horsepower": "489",
+    "transmission": "Automatic",
+    "fuelType": "Electric",
+    "drivetrain": "AWD",
+    "mileage": "0",
+    "exteriorColor": "Luxurioud Grey",
+    "interiorColor": "Orange",
+    "description": "The Xiaomi YU7 B4 (Pro AWD) is a premium electric SUV featuring 489 hp, 690 Nm of torque, a 96.3 kWh battery, up to 770 km CLTC driving range, and 0–100 km/h in just 4.27 seconds. It combines luxury, cutting-edge technology, fast charging, advanced autonomous driving hardware, and long-distance capability, making it one of the strongest competitors to the Tesla Model Y in the premium EV segment.",
+    "features": [
+      "| Specification    | Details                          |\n| ---------------- | -------------------------------- |\n| Manufacturer     | Xiaomi Auto                      |\n| Model            | Xiaomi YU7 B4 (Pro AWD)          |\n| Vehicle Type     | Mid-size Luxury Electric SUV     |\n| Body Style       | 5-door SUV                       |\n| Seating Capacity | 5                                |\n| Drivetrain       | Dual Motor All-Wheel Drive (AWD) |\n| Platform         | Modena EV Platform               |"
+    ],
+    "featured": true,
+    "sold": false,
+    "images": [
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782734419/xiaomi_z2zxh4.jpg",
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782734419/xiaomi_3_hk7tif.jpg",
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782734419/xiaomi_1_xcgdcp.jpg"
+    ],
+    "views": 0,
+    "createdAt": "2026-06-29T20:00:24.321Z"
+  },
+  {
+    "id": "v1782763625079",
+    "name": "Toyota Toyota Grand Highlander 2024",
+    "brand": "Toyota",
+    "model": "Toyota Grand Highlander 2024",
+    "year": 2024,
+    "price": 139000000,
+    "condition": "Foreign Used",
+    "location": "Abuja",
+    "engine": "2.4L Turbocharged Inline-4",
+    "horsepower": "265",
+    "transmission": "Automatic",
+    "fuelType": "Petrol",
+    "drivetrain": "AWD",
+    "mileage": "0",
+    "exteriorColor": "Luxurious Black",
+    "interiorColor": "Black",
+    "description": "The 2024 Toyota Grand Highlander is a premium three-row family SUV offering seating for up to eight passengers, a spacious third row, up to 5,000 lbs towing capacity, advanced Toyota Safety Sense 3.0 technology, and a choice of efficient hybrid or powerful turbocharged engines. It is one of Toyota's most practical and comfortable family SUVs.",
+    "features": [
+      "| Specification | Details                    |\n| ------------- | -------------------------- |\n| Engine        | 2.4L Turbocharged Inline-4 |\n| Horsepower    | 265 hp                     |\n| Torque        | 310 lb-ft (420 Nm)         |\n| Transmission  | 8-Speed Automatic          |\n| Drive Type    | FWD or AWD                 |\n| 0–100 km/h    | ~7.0 seconds               |\n| Top Speed     | ~180 km/h                  |\n| Fuel Type     | Regular Petrol             |"
+    ],
+    "featured": true,
+    "sold": false,
+    "images": [
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782734700/toyota_highlander_1_rjuiwg.jpg",
+      "https://res.cloudinary.com/da7jzmy2g/image/upload/v1782734701/toyota_highlander_cbrjjk.jpg"
+    ],
+    "views": 0,
+    "createdAt": "2026-06-29T20:07:05.080Z"
   }
 ]

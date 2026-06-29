@@ -723,7 +723,7 @@ document.getElementById('img-file-input').addEventListener('change', async (e) =
   try {
     const res = await fetch('/api/upload', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${TOKEN}` },
+       headers: {},
       body: formData,
     });
     const data = await res.json();
