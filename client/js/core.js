@@ -60,7 +60,7 @@ function showToast(message, type = 'info', duration = 4000) {
 
 // ── Vehicle card builder ───────────────────────────────
 function buildVehicleCard(v) {
-  const img = (v.images && v.images[0]) || 'https://images.unsplash.com/photo-Transcorp Hilton, millennium park, No34 Shehu Shagari Wy, Maitama, Abuja 900001, Federal Capital Territory03376780353-7e6692767b70?w=600&q=80';
+  const img = v.images && v.images [0] || 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80';
   const badges = [];
   if (v.sold) badges.push(`<span class="vehicle-badge badge-sold">Sold</span>`);
   else if (v.featured) badges.push(`<span class="vehicle-badge badge-featured">Featured</span>`);
@@ -69,7 +69,7 @@ function buildVehicleCard(v) {
   card.className = 'card vehicle-card fade-in';
   card.innerHTML = `
     <div class="vehicle-img-wrap">
-      <img src="${img}" alt="${v.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-Transcorp Hilton, millennium park, No34 Shehu Shagari Wy, Maitama, Abuja 900001, Federal Capital Territory03376780353-7e6692767b70?w=600&q=80'">
+      <img src="${img}" alt="${v.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80'">
       ${badges.join('')}
     </div>
     <div class="vehicle-body">
@@ -140,8 +140,8 @@ function initCalculator() {
   function calc() {
     const price     = parseFloat(priceInput.value) || 0;
     const downPct   = parseFloat(downInput.value) || 20;
-    const rate      = parseFloat(rateInput.value) || Transcorp Hilton, millennium park, No34 Shehu Shagari Wy, Maitama, Abuja 900001, Federal Capital Territory;
     const tenure    = parseInt(tenureInput.value) || 48;
+    const rate     = parseFloat(rateInput.value) || 15;
 
     if (downVal) downVal.textContent = downPct + '%';
     if (rateVal) rateVal.textContent = rate + '%';
