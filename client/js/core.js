@@ -222,4 +222,51 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initCalculator();
   initBookingForm();
+  initTheme();
 });
+
+// ── Theme (light / dark) ─────────────────────────────────
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+}
+
+function toggleTheme() {
+  const current = document.documentElement.dataset.theme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem('theme', next); } catch (e) { /* ignore */ }
+}
+
+function initTheme() {
+  const saved = (() => { try { return localStorage.getItem('theme'); } catch (e) { return null; } })();
+  const initial = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  applyTheme(initial);
+
+  let btn = document.getElementById('theme-toggle');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'theme-toggle';
+    btn.type = 'button';
+    btn.className = 'btn btn-ghost';
+    btn.setAttribute('aria-label', 'Toggle theme');
+
+    const navInner = document.querySelector('.nav-inner');
+    if (navInner) {
+      const burger = navInner.querySelector('.nav-burger');
+      if (burger) navInner.insertBefore(btn, burger);
+      else navInner.appendChild(btn);
+    } else {
+      const adminTop = document.querySelector('.admin-topbar');
+      if (adminTop) {
+        // append to the right-side container if present
+        const cols = adminTop.querySelectorAll('div');
+        const right = cols[1] || adminTop;
+        right.appendChild(btn);
+      }
+    }
+  }
+
+  btn.addEventListener('click', toggleTheme);
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Calculator — Manga Autos</title>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">MANGA <span>AUTOS</span></a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/inventory">Inventory</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <a href="https://wa.me/2348099999915" target="_blank" class="nav-cta">WhatsApp Us</a>
+    <button class="nav-burger" id="nav-burger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main style="padding-top:var(--nav-h);">
+  <section class="section">
+    <div class="container" style="max-width:900px;margin:0 auto;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+        <div>
+          <span class="eyebrow">Calculator</span>
+          <div class="gold-line"></div>
+          <h2 class="display-lg">Full Loan <em>Calculator</em></h2>
+          <p style="color:var(--silver);">Use the full calculator to simulate payment scenarios, compare terms, and view an amortization table.</p>
+        </div>
+      </div>
+
+      <div class="calc-card" style="margin-top:1.5rem;">
+        <div class="form-group">
+          <label class="form-label">Vehicle Price (₦)</label>
+          <input type="number" id="calc-price" class="form-control" value="95000000" min="0" step="500000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Down Payment — <span id="calc-down-val">20%</span></label>
+          <input type="range" id="calc-down" min="0" max="100" value="20" step="1" style="width:100%;accent-color:var(--gold)">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Interest Rate — <span id="calc-rate-val">15%</span></label>
+          <input type="range" id="calc-rate" min="0" max="30" value="15" step="0.1" style="width:100%;accent-color:var(--gold)">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Loan Duration — <span id="calc-tenure-val">48 mo</span></label>
+          <input type="range" id="calc-tenure" min="6" max="84" value="48" step="1" style="width:100%;accent-color:var(--gold)">
+        </div>
+
+        <div class="calc-result">
+          <div class="eyebrow" style="margin-bottom:0.4rem;">Estimated Monthly Payment</div>
+          <div class="calc-result-main" id="calc-result">₦0</div>
+          <div class="calc-breakdown">
+            <div><div class="calc-item-label">Loan Amount</div><div class="calc-item-val" id="calc-loan-amount">—</div></div>
+            <div><div class="calc-item-label">Total Payable</div><div class="calc-item-val" id="calc-total">—</div></div>
+            <div><div class="calc-item-label">Total Interest</div><div class="calc-item-val" id="calc-interest">—</div></div>
+          </div>
+          <p style="font-size:0.7rem;color:var(--silver-dim);margin-top:1rem;">*Estimates only. Final rates subject to bank approval.</p>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <h4 class="label">Amortization</h4>
+          <div id="amortization" style="margin-top:0.75rem;color:var(--silver);"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="/js/core.js"></script>
+</body>
+</html>
