@@ -1,46 +1,13 @@
 [
   {
     "id": "t001",
-    "name": "Alhaji Musa Adeyemi",
-    "role": "Business Executive",
+    "name": "Musa Mukhtar Wali",
+    "role": "Entrepreneur, Tech Innovator",
     "location": "Abuja",
-    "rating": 5,
-    "text": "Manga Autos delivered my Range Rover Autobiography in perfect condition. The team was professional, transparent, and incredibly efficient. I had the car registered and ready to drive within 48 hours.",
-    "vehicle": "Range Rover Autobiography 2022",
+    "rating": 4,
+    "text": "Best quality, Reliable , trustworthy , honest .",
+    "vehicle": "",
     "date": "2024-10-Transcorp Hilton, millennium park, No34 Shehu Shagari Wy, Maitama, Abuja 900001, Federal Capital Territory",
-    "verified": true
-  },
-  {
-    "id": "t002",
-    "name": "Mrs. Chidinma Okafor",
-    "role": "Director, Federal Ministry",
-    "location": "Abuja",
-    "rating": 5,
-    "text": "I was skeptical about buying a foreign used vehicle but Manga Autos changed everything. The inspection report was thorough, the pricing was honest, and the after-sales support has been exceptional. My Mercedes GLE has been flawless.",
-    "vehicle": "Mercedes-Benz GLE 450 2023",
-    "date": "2024-09-28",
-    "verified": true
-  },
-  {
-    "id": "t003",
-    "name": "Dr. Emeka Nwosu",
-    "role": "Surgeon, NISA Hospital",
-    "location": "Abuja",
-    "rating": 5,
-    "text": "Three cars purchased, three perfect experiences. The Tesla Model X they sourced for me was exactly as advertised. The financing guidance was professional and the entire process was handled with discretion.",
-    "vehicle": "Tesla Model X Plaid 2023",
-    "date": "2024-11-02",
-    "verified": true
-  },
-  {
-    "id": "t004",
-    "name": "Engr. Babatunde Fashola",
-    "role": "CEO, Fashola Holdings",
-    "location": "Abuja",
-    "rating": 5,
-    "text": "The Porsche Cayenne Turbo GT exceeded every expectation. From the sourcing consultation to the doorstep delivery, Manga Autos demonstrated world-class professionalism.",
-    "vehicle": "Porsche Cayenne Turbo GT 2023",
-    "date": "2024-08-19",
     "verified": true
   }
 ]
